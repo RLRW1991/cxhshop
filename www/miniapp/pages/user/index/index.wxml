@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<view class="container">
+    <view  bindtap="bindViewTap" class="userinfo">
+        <view class="user-box">
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <text>{{userInfo.nickName}}</text>
+            <image class="set-btn" src="../../../images/set.png"></image>
+        </view>
+        <view class="user-mes">
+            <view class="mes-item"  wx:for="{{userInfoList.mesList}}">
+                <view class="mes-num">{{item.num}}</view>
+                <view class="mes-title">{{item.des}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="my-order">
+        <view class="order-title">
+            <image class="order-ico" src="{{userInfoList.orderIco}}"></image>
+            <text>我的订单</text>
+        </view>
+        <view class="all-order">
+            <view>全部订单</view>
+            <image class="arrow-right" src="../../../images/icon-arrowdown.png"></image>
+        </view>
+    </view>
+    <view class="order-list">
+        <view class="order-item" wx:for="{{userInfoList.orderList}}" wx:for-index="idx">
+            <view class="{{'order-pic'+idx}} order-pic">
+                <image class="wh100" src="{{item.pic}}"></image>
+            </view>
+            <text class="order-des">{{item.des}}</text>
+            <text class="order-num">{{item.num}}</text>
+        </view>
+    </view>
+    <view class="my-order">
+        <view class="order-title">
+            <image class="order-ico" src="{{userInfoList.walletIco}}"></image>
+            <text>我的钱包</text>
+        </view>
+        <view class="all-order">
+            <view>资金管理</view>
+            <image class="arrow-right" src="../../../images/icon-arrowdown.png"></image>
+        </view>
+    </view>
+    <view class="order-list wallet-list">
+        <view class="wallet-item" wx:for="{{userInfoList.walletList}}">
+            <view class="wallet-num">{{item.num}}</view>
+            <view class="wallet-des">{{item.des}}</view>
+        </view>
+    </view>
+    <view class="manage-list">
+         <view class="manage-item" wx:for="{{userInfoList.manageList}}">
+            <view class="order-title">
+                <image class="order-ico" src="{{item.pic}}"></image>
+                <text>{{item.des}}</text>
+            </view>
+            <image class="arrow-right" src="../../../images/icon-arrowdown.png"></image>
+        </view>
+    </view>
+   
+</view>

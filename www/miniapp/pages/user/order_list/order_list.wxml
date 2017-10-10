@@ -1,0 +1,50 @@
+<!--order_list.wxml-->
+<scroll-view bindscrolltolower="loadMore" scroll-y="{{true}}" style="height:{{scrollHeight}}px;">
+<view class="container">
+    <view class="type-navbar">
+        <view class="type-box" wx:for="{{categories}}">
+            <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="changeTab">
+                {{item.name}}
+            </view>
+        </view>
+    </view>
+    <view class="goods-container">
+        <view class="goods-box" wx:for="{{requestData}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+            <view class="goods-title">
+                <view class="order-number">订单编号:{{item.order_sn}}</view>
+                <view class="pay-status">{{item.order_status_desc}}</view>
+            </view>
+            <block wx:for="{{item.goods_list}}" wx:for-item="goods">
+            <view class="goods-cont">
+                <view class="img-box">
+                    <image class="wh100" src="{{url}}/api/goods/goodsThumImages?goods_id={{goods.goods_id}}&width=200&height=200"></image>
+                </view>
+                <view class="goods-mes">
+                    <view class="goods-name">{{goods.goods_name}}</view>
+                    <view class="goods-price">¥ {{goods.goods_price}}</view>
+                    <view class="goods-num">数量 {{goods.goods_num}}</view>
+                </view>
+            </view>
+            </block>
+            <view class="goods-tips">
+                <view class="order-total">
+                    <view class="goods-total">￥{{item.goods_sum}}</view>共{{item.goods_list.length}}件
+                </view>
+                <view class="check-btn">
+                    <view hidden="{{item.payStatus==0 ? false:true }}" class="completed goods-btn">查看物流</view>
+                    <view hidden="{{item.payStatus==1 ? false:true}}" class="payment">
+                        <view class="immediate-pay goods-btn">立即支付</view>
+                        <view class="cancel-pay goods-btn">取消支付</view>
+                    </view>
+                    <view hidden="{{item.payStatus==2 ? false:true}}" class="cancel"></view>
+                    <view hidden="{{item.payStatus==3 ? false:true}}" class="evaluate">
+                        <view class="evaluate-btn goods-btn">评价</view>
+                        <view class="see-logistics goods-btn">查看物流</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view> -->
+</view>
+</scroll-view>

@@ -1,0 +1,102 @@
+<!--index.wxml-->
+<scroll-view bindscrolltolower="loadMoreGoods" bindscroll="scrollMove"  scroll-y="true" style="height:{{scrollHeight}}px;">
+    <view class="container">
+        <view class="search-wrap">
+            <view class="search-box {{scrollTop>10?'search-fixed':''}}">
+                <view class="logo"><image class="wh100" src="{{resourceUrl+'/static/images/logo.png'}}"></image></view>
+                <view class="search-inner">
+                    <view class="search-img"><image class="wh100" src="{{resourceUrl+'/static/images/search.png'}}"></image></view>
+                    <input class="search-cont" placeholder="请输入您所搜索的商品" type="text" />
+                </view>
+            </view>
+        </view>
+        <view>
+            <swiper class="swiper_box" indicator-dots="true" vertical="" autoplay="true" interval="3000" duration="1000">
+                <block wx:for="{{homeData.ad}}">
+                    <swiper-item>
+                        <navigator url="../other/other?id=1" redirect>
+                            <image src="{{item.ad_code}}" class="slide-image"/>
+                        </navigator>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>
+
+        <view class="venues_box">
+        <view class="venues_list">
+            <view class="venues_item">
+                <navigator url="/pages/goods/categoryList/categoryList" open-type="switchTab">
+                    <image src="{{resourceUrl}}/static/images/icon_03.png"/>
+                    <view>全部分类</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/goods/integralMall/integralMall">
+                    <image src="{{resourceUrl}}/static/images/icon_05.png"/>
+                    <view>积分商城</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/goods/brandstreet/brandstreet">
+                    <image src="{{resourceUrl}}/static/images/icon_07.png"/>
+                    <view>品牌街</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/goods/promote_goods/promote_goods">
+                    <image src="{{resourceUrl}}/static/images/icon_09.png"/>
+                    <view>优惠活动</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/activity/group_list/group_list">
+                    <image src="{{resourceUrl}}/static/images/icon_15.png"/>
+                    <view>团购</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="../other/other?id=1" redirect>
+                    <image src="{{resourceUrl}}/static/images/icon_16.png"/>
+                    <view>领券订单</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/cart/cart/cart" open-type="switchTab">
+                    <image src="{{resourceUrl}}/static/images/icon_17.png"/>
+                    <view>购物车</view>
+                </navigator>
+            </view>
+            <view class="venues_item">
+                <navigator url="/pages/user/index/index" open-type="switchTab">
+                    <image src="{{resourceUrl}}/static/images/icon_19.png"/>
+                    <view>个人中心</view>
+                </navigator>
+            </view>
+        </view>
+        </view>
+
+        <image class="banner" src="{{resourceUrl}}/static/images/ind_33.jpg"/>
+
+        <view class="choice_box">
+            <view class="choice_list">
+                <block wx:for="{{homeData.high_quality_goods}}">
+                    <navigator url="../details/index?id={{item.id}}">
+                        <view class="choice_item">
+                            <image src="{{url}}/api/goods/goodsThumImages?goods_id={{item.goods_id}}&width=400&height=400"></image>
+                            <view class="title ellipsis-2">{{item.goods_name}}</view>
+                            <view class="choice_footer">
+                            <view class="price">￥{{item.shop_price}}</view>
+                            <view class="similer">找相似</view>
+                        </view>
+                        </view>
+                    </navigator>
+                </block>
+            </view>
+        </view>
+
+        <loading hidden="{{loadingHidden}}">
+            加载中...
+        </loading>
+
+    </view>
+</scroll-view>

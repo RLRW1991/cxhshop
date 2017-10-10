@@ -1,0 +1,56 @@
+/**app.wxss**/
+@import "./style/layout.wxss";
+.container {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+page {
+    background-color: #f2f2f2;
+}
+button{
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background-color:transparent;
+    font-size: 28rpx;
+}
+.wh100{
+    width: 100%;
+    height: 100%;
+}
+/* 
+    单行文本超出隐藏,
+    要使用的div必须要有宽和高
+ */
+.ellipsis-1{   
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/* 
+    两行文本超出隐藏,
+    要使用的div必须要有宽和高
+ */
+.ellipsis-2{
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    display:-webkit-box; 
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+}
+.pd-bg-fff{
+    padding: 0 30rpx;
+    background-color: #fff;
+}
+.co-red{
+    color: #f23030;
+}
+.hide{
+    display: none;
+}
+.t-c{
+    text-align: center;
+}

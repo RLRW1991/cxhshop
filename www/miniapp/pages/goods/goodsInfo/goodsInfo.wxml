@@ -1,0 +1,224 @@
+<!--goodsInfo.wxml-->
+<view class="container">
+    <view class="type-navbar">
+        <view class="type-box" wx:for-items="{{categories}}">
+            <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+                {{item.name}}
+            </view>
+        </view>
+    </view>
+    <view class="goods-detail">
+        <view class="goods-info" hidden="{{activeCategoryId==0?false:true}}">
+            <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}"
+                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+                <block wx:for="{{homeData}}">
+                    <swiper-item>
+                        <image class="wh100" src="{{item.swiperSrc}}" />
+                    </swiper-item>
+                </block>
+            </swiper>
+            <view class="goods-title pd-bg-fff">
+                <view class="goods-name ellipsis-2">{{goods.goodsName}}</view>
+                <view class="goods-collect">
+                    <view class="collect-img"></view>
+                    <view class="collect-des">收藏</view>
+                </view>
+            </view>
+            <view class="goods-price pd-bg-fff">
+                <view class="co-red">￥{{goods.priceNow}}元</view>
+                <view class="market-price">市场价格:<view>{{goods.marketPrice}}</view></view>
+                <view class="goods-num">
+                    <view class="sales">销量:{{goods.sales}}</view>
+                    <view class="stock">当前库存:{{goods.stock}}</view>
+                </view>
+            </view>
+            <view class="logistics-list pd-bg-fff">
+                <view class="logistics-item">
+                    <view class="item-title ellipsis-1">所在地区</view>
+                    <view class="item-mes">{{order.userAddress}}</view>
+                    <view class="item-img"><image class="wh100" src="../../../images/icon-arrowdown.png" ></image></view>
+                </view>
+                <view class="logistics-item">
+                    <view class="item-title">运费信息</view>
+                    <view class="item-mes">{{order.logisticsWay+' '}}￥{{order.freight}}</view>
+                    <view class="item-img"><image class="wh100" src="../../../images/icon-arrowdown.png" ></image></view>
+                </view>
+                <view class="logistics-item">
+                    <view class="item-title">已选</view>
+                    <view class="item-mes">{{order.goodsColor+'　'}}{{order.goodsNum}}件</view>
+                    <view class="item-img"><image class="wh100" src="../../../images/icon-arrowdown.png" ></image></view>
+                </view>
+                <view class="logistics-item">
+                    <view class="item-title">服务</view>
+                    <view class="item-mes ellipsis-1">{{order.goodsService}}</view>
+                    <icon type="warn" size="20" color="gray"/>
+                </view>
+                <view class="guarantee logistics-item">
+                    <view>
+                        <image class="ico-item" src="{{COD}}"></image>
+                        货到付款
+                    </view>
+                    <view>
+                        <image class="ico-item" src="{{refunds}}"></image>
+                        七天退货
+                    </view>
+                    <view>
+                        <image class="ico-item" src="{{topSpeed}}"></image>
+                        极速达
+                    </view>
+                </view>
+                <view class="look-detail logistics-item">
+                    <view class="co-red">查看商品详情</view>
+                    <view class="item-img"><image class="wh100" src="../../../images/icon-arrowdown.png" ></image></view>
+                </view>
+            </view>
+            <view class="user-comment logistics-item pd-bg-fff">
+                <view>用户评论</view>
+                <view class="good-comment">好评率 <view class="co-red">{{goods.goodComment}}</view></view>
+                <view class="comment-num">
+                    <view class="co-red">{{goods.commentNum}}</view>人评价
+                    <view class="item-img"><image class="wh100" src="../../../images/icon-arrowdown.png" ></image></view>
+                </view>
+            </view>
+            <view class="recommend">
+                <view class="recommend-title co-red">为你推荐</view>
+                <view class="recommend-ul">
+                    <navigator class="li" url="#" wx:for="{{goods.recommend}}">
+                        <view class="li-img"><image class="wh100" src="{{item.recommendImg}}"></image></view>
+                        <view class="li-title ellipsis-2">{{item.recommendName}}</view>
+                        <view class="co-red">￥{{item.recommendPerice}}</view>
+                    </navigator>
+                </view>
+            </view>
+            <view class="comment-list">
+                <view class="comment-item" wx:for="{{comment}}">
+                    <view class="comment-title">
+                        <view class="user-name">
+                            <view class="user-pic"><image class="wh100" src="{{item.avatar}}"></image></view>
+                            {{item.userName}}
+                        </view>
+                        <view>{{item.commentTime}}</view>
+                    </view>
+                    <view class="comment-cont">
+                        <view class="stars">
+                            <view class="stars-checked">
+                                <image class="star" src="../../../images/star-red.png" wx:for="{{item.starNum}}"></image>
+                            </view>
+                            <view class="stars-unchecked">
+                                <image class="star" src="../../../images/star-gray.png" wx:for="{{5-item.starNum}}"></image>
+                            </view>
+                        </view>
+                        <view class="comment-mes">{{item.commentMes}}</view>
+                        <view class="img-ul">
+                            <view class="img-li" wx:for="{{item.commentImg}}"><image class="wh100" src="{{item.imgSrc}}"></image></view>
+                        </view>
+                        <view class="reply-ul">
+                            <view class="reply-li comment-mes" wx:for="{{item.replyList}}">{{item.userName+' '}}回复 :{{' '+item.replyMes}}</view>
+                        </view>
+                    </view>
+                    <view class="comment-btn">
+                        <view class="btn">
+                            <view class="collect-img btn-img"></view>
+                            <view>{{item.likesNum}}</view>
+                        </view>
+                        <view class="btn">
+                            <view class="mes-img btn-img"></view>
+                            {{item.mesNum}}
+                        </view>
+                    </view>
+                </view>
+                <view class="comment-more" hidden="{{!commentMore}}">点击查看更多</view>
+                <view class="comment-more" hidden="{{commentMore}}">已显示完所有评论</view>
+                <view class="goods-more comment-more">查看图文详情</view>
+            </view>
+        </view>
+        <view class="goods-norms" hidden="{{activeCategoryId==1?false:true}}">
+             <view class="type-navbar2">
+                <view class="type-box2" wx:for-items="{{categories2}}">
+                    <view id="{{item.id}}" class="{{activeCategoryId2 == item.id ? 'type-item2-on' : ''}}" bindtap="tabClick2">
+                        {{item.name}}
+                    </view>
+                </view>
+            </view>
+            <view class="detail-img-list" hidden="{{activeCategoryId2==0?false:true}}">
+                <view class="detail-item" wx:for="{{homeData}}"><image class="detail-img" src="{{item.swiperSrc}}"></image></view>
+            </view>
+            <view class="parameter" hidden="{{activeCategoryId2==1?false:true}}">
+                <view class="table">
+                    <view class="th-thitle tb">主体</view>
+                    <view class="td-cont tb" wx:for="{{parameter}}">
+                        <view class="td-title">{{item.tdTitle}}</view>
+                        <view class="td-text">{{item.tdText}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="goods-comment" hidden="{{activeCategoryId==2?false:true}}">
+            <view class="type-navbar3">
+                <view class="type-box3" wx:for-items="{{categories3}}">
+                    <view id="{{item.id}}" class="{{activeCategoryId3 == item.id ? 'type-item3-on' : ''}}" bindtap="tabClick3">
+                        <view>{{item.name}}</view>
+                        <view>{{item.num}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="comment-list">
+                <view class="comment-item" wx:for="{{comment}}">
+                    <view class="comment-title">
+                        <view class="user-name">
+                            <view class="user-pic"><image class="wh100" src="{{item.avatar}}"></image></view>
+                            {{item.userName}}
+                        </view>
+                        <view>{{item.commentTime}}</view>
+                    </view>
+                    <view class="comment-cont">
+                        <view class="stars">
+                            <view class="stars-checked">
+                                <image class="star" src="../../../images/star-red.png" wx:for="{{item.starNum}}"></image>
+                            </view>
+                            <view class="stars-unchecked">
+                                <image class="star" src="../../../images/star-gray.png" wx:for="{{5-item.starNum}}"></image>
+                            </view>
+                        </view>
+                        <view class="comment-mes">{{item.commentMes}}</view>
+                        <view class="img-ul">
+                             <view class="img-li" wx:for="{{item.commentImg}}"><image class="wh100" src="{{item.imgSrc}}"></image></view>
+                        </view>
+                        <view class="reply-ul">
+                            <view class="reply-li comment-mes" wx:for="{{item.replyList}}">{{item.userName+' '}}回复 :{{' '+item.replyMes}}</view>
+                        </view>
+                    </view>
+                    <view class="comment-btn">
+                        <view class="btn">
+                            <view class="collect-img btn-img"></view>
+                            <view>{{item.likesNum}}</view>
+                        </view>
+                        <view class="btn">
+                            <view class="mes-img btn-img"></view>
+                            {{item.mesNum}}
+                        </view>
+                    </view>
+                </view>
+                <view class="comment-more" hidden="{{!commentMore}}">点击查看更多</view>
+                <view class="comment-more" hidden="{{commentMore}}">已显示完所有评论</view>
+                <view class="goods-more comment-more">查看图文详情</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="toTop"><image class="wh100" src="{{toTop}}"></image></view>
+<view class="join-cart">
+    <view class="custom-service cart-ico">
+        <image class="cs-img" src="../../../images/custom-service.png"></image>
+        <view>客服</view>
+    </view>
+    <view class="shopping-cart cart-ico">
+        <image class="sc-img" src="../../../images/shopping-cart.png"></image>
+        <view class="cart-num ellipsis-1">{{cartGoodsNum}}</view>
+        <view>购物车</view>            
+    </view>
+    <view class="join-btn cart-btn">加入购物车</view>
+    <view class="buy-btn cart-btn">立即购买</view>
+</view>
+
+

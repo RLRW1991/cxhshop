@@ -1,0 +1,32 @@
+<!--group_list.wxml-->
+<scroll-view bindscrolltolower="loadMoreGoods" scroll-y="{{true}}" style="height:{{scrollHeight}}px;">
+<view class="container">
+    <view class="nav">
+        <navigator class="nav-item" bindtap="changeTab" id='tab_default'>默认</navigator>
+        <navigator class="nav-item" bindtap="changeTab" id='tab_new'>最新<view class="ico-dg"></view></navigator>
+        <navigator class="nav-item" bindtap="changeTab" id='tab_comment'>评论数<view class="ico-dg"></view></navigator>
+    </view>
+    <navigator class="group-purchase">
+        <image class="wh100" src="{{url}}{{requestData.ad.ad_code}}"/>
+    </navigator>
+    <view class="choice_box">
+        <view class="choice_list">
+            <block wx:for="{{requestData.groups}}">
+                <navigator class="choice_item" url="../details/index?id={{item.id}}">
+                    <view class="img-wrap">
+                        <image src="{{url}}/api/goods/goodsThumImages?goods_id={{item.goods_id}}&width=400&height=400"></image>
+                        <view class="discount">{{item.rebate}}折</view>
+                    </view>
+                    <view class="title">{{item.title}}</view>
+                    <view class="involved">{{item.virtual_num + item.order_num}}人参与</view>
+                    <view class="price">￥{{item.price}}</view>
+                    <view class="count-down">
+                        <view class="tip-count">剩余</view>
+                        <view class="tip-count">365天5小时57分52秒</view>
+                    </view>
+                </navigator>
+            </block>
+        </view>
+    </view>
+</view>
+</scroll-view>

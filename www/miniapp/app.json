@@ -1,0 +1,57 @@
+{
+    "pages": [
+        "pages/index/index/index",
+        "pages/goods/categoryList/categoryList",
+        "pages/cart/cart/cart",
+        "pages/user/index/index",
+        "pages/user/order_list/order_list",
+        "pages/list/index",
+        "pages/activity/discount_list/discount_list",
+        "pages/goods/integralMall/integralMall",
+        "pages/goods/brandstreet/brandstreet",
+        "pages/activity/group_list/group_list",
+        "pages/user/order_detail/order_detail",
+        "pages/goods/goodsInfo/goodsInfo"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "TPshop商城",
+        "navigationBarBackgroundColor": "#eeeeee",
+        "backgroundColor": "#eeeeee",
+        "enablePullDownRefresh": true
+    },
+    "tabBar": {
+        "color": "#6e6d6b",
+        "selectedColor": "#f23030",
+        "borderStyle": "white",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index/index",
+                "iconPath": "images/nav/footer-icon-01.png",
+                "selectedIconPath": "images/nav/footer-icon-01-active.png",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/goods/categoryList/categoryList",
+                "iconPath": "images/nav/footer-icon-02.png",
+                "selectedIconPath": "images/nav/footer-icon-02-active.png",
+                "text": "分类"
+            },
+            {
+                "pagePath": "pages/cart/cart/cart",
+                "iconPath": "images/nav/footer-icon-03.png",
+                "selectedIconPath": "images/nav/footer-icon-03-active.png",
+                "text": "购物车"
+            },
+            {
+                "pagePath": "pages/user/index/index",
+                "iconPath": "images/nav/footer-icon-04.png",
+                "selectedIconPath": "images/nav/footer-icon-04-active.png",
+                "text": "我的"
+            }
+        ]
+    },
+    "debug": true
+}

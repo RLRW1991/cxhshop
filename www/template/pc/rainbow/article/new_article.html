@@ -1,0 +1,532 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页-{$tpshop_config['shop_info_store_title']}</title>
+    <meta name="keywords" content="{$tpshop_config['shop_info_store_keyword']}"/>
+    <meta name="description" content="{$tpshop_config['shop_info_store_desc']}"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/alone_index.css"/>
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/global.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/static/images/favicon.ico" media="screen"/>
+    <!-- 新浪获取ip地址 -start-->
+    <if condition="$Think.cookie.province_id elt 0">
+        <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip={$Request.ip}"></script>
+        <script type="text/JavaScript">
+            doCookieArea(remote_ip_info);
+        </script>
+    </if>
+</head>
+<body class="gray_f5">
+    <!--header-s-->
+    <div class="tpshop-tm-hander tp_h_alone p">
+        <!--导航栏-s-->
+        <div class="top-hander p">
+            <div class="w1224 pr p">
+                <div class="fl">
+                    <!-- 收货地址，物流运费 -start-->
+                    <link rel="stylesheet" href="__STATIC__/css/location.css" type="text/css"><!-- 收货地址，物流运费 -->
+                        <div class="fl nologin">
+                            <!--<span>你好，欢迎来到车享惠！| 24小时免费电话：400-1166-167</span>-->
+                            <a href="{:U('Home/user/login')}">请登录</a>| 
+                            <a href="{:U('Home/user/reg')}">免费注册</a>
+                        </div>
+                        <div class="fl islogin">
+                            <a class="red userinfo" href="{:U('Home/user/index')}" ></a>
+                            <a  href="{:U('Home/user/logout')}"  title="退出" target="_self">安全退出</a>
+                        </div>
+                </div>
+                <div class="top-ri-header fr">
+                    <ul>
+                        <li><a target="_blank" href="{:U('/Home/User/order_list')}">我的订单</a></li>
+                        <li class="spacer"></li>
+                        <li><a target="_blank" href="{:U('Home/User/visit_log')}">我的浏览</a></li>
+                        <li class="spacer"></li>
+                        <li><a target="_blank" href="{:U('/Home/User/coupon')}">我的优惠券</a></li>
+                        <li class="spacer"></li>
+                        <li><a target="_blank" href="{:U('/Home/User/goods_collect')}">我的收藏</a></li>
+                        <li class="spacer"></li>
+                        <li><a target="_blank" title="点击这里给我发消息" href="{:U('Home/Article/detail',array('article_id'=>22))}" target="_blank">在线客服</a></li>
+                        <li class="spacer"></li>
+                        <li class="hover-ba-navdh">
+                            <div class="nav-dh">
+                                <span>网站导航</span>
+                                <i class="share-a_a1"></i>
+                                <div class="conta-hv-nav">
+                                    <ul>
+                                        <li>
+                                            <a href="{:U('Home/Activity/group_list')}">团购</a>
+                                        </li>
+                                        <li>
+                                            <a href="{:U('Home/Activity/flash_sale_list')}">抢购</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--导航栏-e-->
+        <div class="nav-middan-z p">
+            <div class="header w1224 p">
+                <div class="ecsc-logo">
+                    <a href="{:U('Index/index')}" class="logo"> <img src="{$tpshop_config['shop_info_store_logo']}"></a>
+                </div>
+                <!--搜索-s-->
+                <div class="ecsc-search">
+                    <form id="searchForm" name="" method="get" action="{:U('Home/Goods/search')}" class="ecsc-search-form">
+                        <input autocomplete="off" name="q" id="q" type="text" value="{$Request.param.q}" placeholder="搜索关键字" class="ecsc-search-input">
+                        <button type="submit" class="ecsc-search-button" onclick="if($.trim($('#q').val()) != '') $('#searchForm').submit();"><i></i></button>
+                        <div class="candidate p">
+                            <ul id="search_list"></ul>
+                        </div>
+                        <script type="text/javascript">
+                            ;(function($){
+                                $.fn.extend({
+                                    donetyping: function(callback,timeout){
+                                        timeout = timeout || 1e3;
+                                        var timeoutReference,
+                                                doneTyping = function(el){
+                                                    if (!timeoutReference) return;
+                                                    timeoutReference = null;
+                                                    callback.call(el);
+                                                };
+                                        return this.each(function(i,el){
+                                            var $el = $(el);
+                                            $el.is(':input') && $el.on('keyup keypress',function(e){
+                                                if (e.type=='keyup' && e.keyCode!=8) return;
+                                                if (timeoutReference) clearTimeout(timeoutReference);
+                                                timeoutReference = setTimeout(function(){
+                                                    doneTyping(el);
+                                                }, timeout);
+                                            }).on('blur',function(){
+                                                doneTyping(el);
+                                            });
+                                        });
+                                    }
+                                });
+                            })(jQuery);
+
+                            $('.ecsc-search-input').donetyping(function(){
+                                search_key();
+                            },500).focus(function(){
+                                var search_key = $.trim($('#q').val());
+                                if(search_key != ''){
+                                    $('.candidate').show();
+                                }
+                            });
+                            $('.candidate').mouseleave(function(){
+                                $(this).hide();
+                            });
+
+                            function searchWord(words){
+                                $('#q').val(words);
+                                $('#searchForm').submit();
+                            }
+                            function search_key(){
+                                var search_key = $.trim($('#q').val());
+                                if(search_key != ''){
+                                    $.ajax({
+                                        type:'post',
+                                        dataType:'json',
+                                        data: {key: search_key},
+                                        url:"{:U('Home/Api/searchKey')}",
+                                        success:function(data){
+                                            if(data.status == 1){
+                                                var html = '';
+                                                $.each(data.result, function (n, value) {
+                                                    html += '<li onclick="searchWord(\''+value.keywords+'\');"><div class="search-item">'+value.keywords+'</div><div class="search-count">约'+value.goods_num+'个商品</div></li>';
+                                                });
+                                                html += '<li class="close"><div class="search-count">关闭</div></li>';
+                                                $('#search_list').empty().append(html);
+                                                $('.candidate').show();
+                                            }else{
+                                                $('#search_list').empty();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        </script>
+                    </form>
+                    <div class="keyword">
+                        <ul>
+                            <foreach name="tpshop_config.hot_keywords" item="wd" key="k">
+                                <li>
+                                    <a href="{:U('Home/Goods/search',array('q'=>$wd))}" target="_blank">{$wd}</a>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+                <!--搜索-e-->
+                <!--购物车-s-->
+                
+                <div class="shopingcar-index fr">
+                    <div class="u-g-cart fr fixed" id="hd-my-cart">
+                        <a href="{:U('Home/Cart/cart')}">
+                            <div class="c-n fl" >
+                                <i class="share-shopcar-index"></i>
+                                <span>我的购物车<em class="sc_z" id="cart_quantity"></em></span>
+                            </div>
+                        </a>
+                        <div class="u-fn-cart u-mn-cart" id="show_minicart"></div>
+                    </div>
+                </div>
+                <!--购物车-e-->
+            </div>
+        </div>
+        <!--商品分类-s-->
+        <div class="nav p">
+            <div class="w1224 p">
+                <div class="categorys2 home_categorys">
+                    <div class="dt">
+                        <a href="{:U('Home/Goods/all_category')}" target="_blank"><i class="share-a_a2"></i>全部商品分类</a>
+                    </div>
+                    <!--全部商品分类-s-->
+                    <div class="dd">
+                        <div class="cata-nav">
+                            <!-- 外层循环点-->
+                            <foreach name="goods_category_tree" key="k" item='v'>
+                            <div class="item fore1">
+                                <if condition="$v[level] eq 1">
+                                <div class="item-left">
+                                    <div class="cata-nav-name">
+                                        <h3>
+                                            <div class="contiw-cer"><span class="share-icon-{$k}"></span></div>
+                                            <a href="{:U('Home/Goods/goodsList',array('id'=>$v[id]))}" title="{$v[name]}">{$v[name]}</a>
+                                        </h3>
+                                    </div>
+                                    <b>&gt;</b>
+                                </div>
+                                </if>
+                                <div class="cata-nav-layer">
+                                    <div class="cata-nav-left">
+                                        <div class="subitems">
+                                            <foreach name="v['tmenu']" key="k2" item='v2'>
+                                                <if condition="$v2[parent_id] eq $v['id']">
+                                                <dl><!-- 2级循环点-->
+                                                    <dt>
+                                                        <a href="{:U('Home/Goods/goodsList',array('id'=>$v2[id]))}" target="_blank">{$v2[name]}<i>&gt;</i></a>
+                                                    </dt>
+                                                    <dd>
+                                                        <foreach name="v2['sub_menu']" key="k3" item='v3'>
+                                                            <if condition="$v3[parent_id] eq $v2['id']">
+                                                            <a href="{:U('Home/Goods/goodsList',array('id'=>$v3[id]))}" target="_blank">{$v3[name]}</a></if>
+                                                        </foreach>
+                                                    </dd>
+                                                </dl>
+                                                </if>
+                                            </foreach>
+                                        </div>
+                                    </div>
+                                    <!--商品分类右侧广告-s-->
+                                    <div class="cata-nav-rigth">
+                                        <adv item="v" pid="51" limit="1">
+                                            <a href="{$v[ad_link]}" <if condition="$v['target'] eq 1">target="_blank"</if>>
+                                                <img src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+                                            </a>
+                                        </adv>
+                                    </div>
+                                    <!--商品分类右侧广告-e-->
+                                </div>
+                            </div>
+                            </foreach>
+                        </div>
+                    </div>
+                    <!--全部商品分类-e-->
+                </div>
+                <!--导航栏-s-->
+                 <div class="navitems" id="nav">
+                    <ul>
+                        <li class="index_modify">
+                            <a href="{:U('Index/index')}" class="selected">首页</a>
+                        </li>
+                        <tpshop sql="SELECT * FROM `__PREFIX__navigation` where is_show = 1 ORDER BY `sort` DESC" key="k" item='v'>
+                            <li class="page"><a href="{$v[url]}" <if condition="$v[is_new] eq 1">target="_blank" </if><span>{$v[name]}</span></a></li>
+                        </tpshop>
+                    </ul>
+                    <!-- <div class="wrap-line" style="width: 72px; left: 20px;">
+                        <span style="left:15px;"></span>
+                    </div> -->
+                </div>
+                <!--导航栏-e-->
+            </div>
+        </div>
+        <!--商品分类-e-->
+    </div>
+    <!--header-e-->
+    <!--轮播图-s-->
+    <div id="myCarousel" class="carousel slide p header-tp" data-ride="carousel">
+        <ol class="carousel-indicators">
+
+        </ol>
+        <div class="carousel-inner">
+        	<assign name="adk" value="1" />
+            <adv pid="2" item="v1" limit="5">
+                <div class="item <if condition='$adk++ eq 1'>active</if>" style="background:{$v.bgcolor};">
+                    <a href="{$v1[ad_link]}"  <if condition="$v1['target'] eq 1">target="_blank"</if>>
+                        <img width="1920px;" height="500px;" src="{$v1[ad_code]}" title="{$v1[title]}" style="{$v1[style]}">
+                    </a>
+                </div>
+            </adv>
+        </div>
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+    
+    <!--文章内容开始-e-->
+    <div class="article_list">
+        <div class="article_list_header">
+        	<div></div>
+        	<span style="font-size: 25px;">Article page</span>
+        </div>
+        <div class="article_list_menu">
+        	<div class="article_list_m">
+        		当前位置：
+        		<a href="{:U('Index/index')}">首页</a>
+        		>
+        		<a href="{:U('Article/new_list')}">新闻中心</a>
+        	</div>
+        	
+        	<div class="new_article_content">
+        		<div class="new_acl_header">
+        			<h1>新能源汽车双积分制将实施,下半年车市纯电动汽车密集上市</h1>
+        			<p>
+        				<span>浏览：3165次 </span>
+		        		<span>来源：车享惠 </span>
+		        		<span>时间：2015-08-19</span>
+        			</p>
+        		</div>
+        		<div class="new_acl_content">
+        			<p>上周，工信部发言人郑立新表示，新能源汽车的双积分制度将于近期正式发布。新能源汽车双积分制，是关于乘用车企业平均燃料消耗量与新能源积分并行管理办法，是针对我国新能源汽车发展的实际情况，通过这个办法来建立我们推动新能源汽车发展的长效机制，促进新能源汽车的研发和推广，加强汽车产品节能减排的管理。</p>
+　　					<p>鼓励传统车企造新能源车</p>
+　　					<p>今年6月国务院法制办发布了《乘用车企业平均燃料消耗量与新能源汽车积分并行管理办法（征求意见稿）》，其中要求，2018-2020年度，乘用车企业的新能源汽车积分比例分别为8%、10%、12%。燃料消耗量积分可以通过结转、关联企业转让、新能源汽车积分抵扣等方式满足要求，新能源汽车积分通过生产新能源汽车或者购买积分满足。</p>
+　　					<p>该政策正式实施，车企必须增加新能源汽车的产销量，否则只能通过向其他企业购买积分。而获得积分较多的企业，则可以出售多余的积分获得利润。</p>
+　　					<p>目前，我国纯电动乘用车以自主品牌为主，据乘联会统计的数据显示，今年上半年排名前十位的纯电动新能源车型全部为自主品牌。</p>
+　　					<p>新政实施后，自主品牌将在新能源市场中再次与合资品牌直接竞争。目前，上汽通用已经将别克VELITE 5国产，并且宣布未来五年，上汽通用将投入265亿人民币开发先进动力总成和新能源技术，推出不少于10款混合动力新品，且每年推出1款国产新能源车。</p>
+　　					<p>北京现代即将于今年下半年推出伊兰特EV，接下来，大众、丰田、三菱、本田等合资企业都将推出新能源产品，以满足政策的要求。</p>
+<p>今年6月国务院法制办发布了《乘用车企业平均燃料消耗量与新能源汽车积分并行管理办法（征求意见稿）》，其中要求，2018-2020年度，乘用车企业的新能源汽车积分比例分别为8%、10%、12%。燃料消耗量积分可以通过结转、关联企业转让、新能源汽车积分抵扣等方式满足要求，新能源汽车积分通过生产新能源汽车或者购买积分满足。</p>
+　　					<p>该政策正式实施，车企必须增加新能源汽车的产销量，否则只能通过向其他企业购买积分。而获得积分较多的企业，则可以出售多余的积分获得利润。</p>
+　　					<p>目前，我国纯电动乘用车以自主品牌为主，据乘联会统计的数据显示，今年上半年排名前十位的纯电动新能源车型全部为自主品牌。</p>
+					<p class="new_acl_content_bot">
+						<span>[责任编辑：车享惠]</span>
+						<i>车享惠独家稿件声明：该作品（文字、图片、图标及音视频）特供车享惠使用，未经授权，任何媒体或个人不得全部和部分转载。</i>
+						<div id="new_acl_content_bot_li">
+							<ul>
+								<li><img src="__STATIC__/images/weixin.png" width='125' height='125'/><span>车享惠官方微信</span></li>
+								<li><img src="__STATIC__/images/weixin.png" width='125' height='125'/><span>车享惠官方微博</span></li>
+								<li><i>扫描二维码，即可一键关注哦!</i></li>
+							</ul>	
+						</div>
+					</p>
+					<div class="new_acl_content_bottom">
+						<ul>
+							<li class="fl">上一篇：<a href="{:U('Article/new_article')}"target="_blank">华西都市报3·15版|车享惠"诚信为本...</a></li>
+							<li class="fr">下一篇：<a href="{:U('Article/new_article')}"target="_blank">公告：关于6月车享惠官网新注册会员通知...</a></li>
+						</ul>
+					</div>
+        		</div>
+        	</div>
+        	<div class="article_list_tj">
+        		<ul>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">华西都市报3·15版|车享惠"诚信为本...</a></li>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">平台升级公告|"车享惠网"正式起航！...</a></li>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">公告：关于6月车享惠官网新注册会员通知...</a></li>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">级公告公众平台升级公告|"车享惠网"正式起航！都市报3·15版...</a></li>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">华西都市报3·15版|车享惠"诚信为本...</a></li>
+        			<li><a href="{:U('Article/new_article')}"target="_blank">升级公告|"车享惠"正式起航都市报3·15版！...</a></li>
+        		</ul>
+        	</div>
+        </div>
+    </div>
+	<script type="text/javascript">
+		+function(){
+			
+		}()
+	</script>
+
+    <!--footer-s-->
+    <div class="foot-alone tp_h_alone">
+        <div class="foot-banner">
+            <div class="w1224">
+                <div class="sum_baner">
+                    <div class="baner-item">
+                        <a href="">
+                            <i class="icon1">7</i>
+                            7天无理由退货
+                        </a>
+                    </div>
+                    <div class="baner-item">
+                        <a href="">
+                            <i class="icon1">15</i>
+                            15天免费换货
+                        </a>
+                    </div>
+                    <div class="baner-item">
+                        <a href="">
+                            <i class="icon1">99</i>
+                            满99元包邮
+                        </a>
+                    </div>
+                    <div class="baner-item">
+                        <a href="">
+                            <i class="icon1">服</i>
+                            手机特色服务
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom">
+            <div class="bottom_center">
+                <div class="bottom_center_slct">
+                    <ul>
+                        <li><a href="#">返回首页</a></li>
+                        <li><a href="#">个人中心</a></li>
+                        <li><a href="#">会员活动</a></li>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">积分商城</a></li>
+                        <li><a href="#">返回顶部</a></li>
+                    </ul>
+                </div>
+                <div class="bottom_center_info">
+                    <dl>
+                        <dt><a href="#">帮助中心</a></dt>
+                        <dd><a href="#">商家入驻</a></dd>
+                        <dd><a href="#">商家帮助</a></dd>
+                        <dd><a href="#">汽车帮助</a></dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#">服务支持</a></dt>
+                        <dd><a href="#">商家保障</a></dd>
+                        <dd><a href="#">质量保障</a></dd>
+                        <dd><a href="#">意见反馈</a></dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#">车惠集团</a></dt>
+                        <dd><a href="#">了解我们</a></dd>
+                        <dd><a href="#">联系我们</a></dd>
+                        <dd><a href="#">加入我们</a></dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#">关注我们</a></dt>
+                        <dd><a href="#">官方微信</a></dd>
+                        <dd><a href="#">官方微博</a></dd>
+                    </dl>
+                </div>
+                <img src="__STATIC__/images/bottom_tel_03.png" class="bottom_center_info_pic"/>
+                <img src="__STATIC__/images/bottom_ewm_03.png" class="bottom_center_info_ewm"/>
+                <span class="bottom_center_info_ewm_txt">扫描二维码  关注官方微信<br>车享惠集团</span>
+                <span class="bottom_center_info_wid" style="margin-top:280px;"><a href="#">关于车享</a> | <a href="#">网站首页</a> | <a href="#">网站地图</a> | <a href="#">联系我们</a> | <a href="#">积分商城</a> | <a href="#">会员商城</a></span>
+                <span class="bottom_center_info_wid">Copyright © 2014 www.cxhnetwork.com  备案号：蜀ICP456455454号-1   联系电话:400-1166-167</span>
+                <span class="bottom_center_info_wid">邮箱：scyljcgs@163.com 传真:0816-6147888 地址：体验中心地址：四川绵阳市涪城区龙门镇 邮编：100048</span>
+                <div class="bottom_center_bt">
+                    <img src="__STATIC__/images/bottom_bt_1_03.png"/>
+                    <img src="__STATIC__/images/bottom_bt_2_03.png"/>
+                    <img src="__STATIC__/images/bottom_bt_3_03.png"/>
+                    <img src="__STATIC__/images/bottom_bt_4_03.png"/>
+                    <img src="__STATIC__/images/bottom_bt_5_03.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--侧边栏-s-->
+    <div class="tp_h_alone">
+        <div class="slidebar_alo">
+            <ul>
+                <li class="re_cuso"><a title="点击这里给我发消息" href="tencent://message/?uin={$tpshop_config['shop_info_qq2']}&amp;Site=TPshop商城&amp;Menu=yes" target="_blank">客服服务</a></li>
+                <li class="re_wechat">
+                    <a target="_blank" href="" >微信关注</a>
+                    <div class="rtipscont" style="">
+                        <span class="arrowr-bg"></span>
+                        <span class="arrowr"></span>
+                        <img src="__STATIC__/images/qrcode.png" />
+                        <p class="tiptext">扫码关注官方微信<br>先人一步知晓促销活动</p>
+                    </div>
+                </li>
+                <li class="re_phone">
+                    <a target="_blank" href="{:U('Mobile/Index/index')}" >手机商城</a>
+                    <div class="rtipscont rstoretips" style="">
+                        <span class="arrowr-bg"></span>
+                        <span class="arrowr"></span>
+                        <img src="__STATIC__/images/qrcode.png" />
+                        <p class="tiptext">扫码关注官方微信<br>先人一步知晓促销活动</p>
+                    </div>
+                </li>
+                <li class="re_top"><a target="_blank" href="javascript:void(0);" >回到顶部</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--侧边栏-e-->
+    <!--footer-e-->
+    <script src="__STATIC__/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/carousel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/transition.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/headerfooter_alone.js" type="text/javascript" charset="utf-8"></script>
+    <!--------收货地址，物流运费-开始-------------->
+    <script src="__STATIC__/js/location.js"></script>
+    <!--------收货地址，物流运费--结束-------------->
+    <script type="text/javascript">
+        $(function() {
+            //首页商品分类显示
+            $('.categorys2 .dd').show();
+
+                var uname= getCookie('uname');
+                if(uname == ''){
+                    $('.islogin').hide();
+                    $('.nologin').show();
+                }else{
+                    $('.nologin').hide();
+                    $('.islogin').show();
+                    //获取用户名
+                    $('.userinfo').html(decodeURIComponent(uname));
+                }
+        })
+        $(function() { //轮播自动播放
+            $(".carousel").carousel({interval: 2000});
+        });
+        $(function() { //floor分类鼠标滑动
+            $(".f_tab li").each(function() {
+                $(this).hoverDelay({
+                    hoverEvent: function() {
+                        $(this).addClass('ft');
+                        $(this).siblings().removeClass('ft');
+                    },
+//			    		outEvent: function(){
+//			        		$(this).siblings().removeClass('ft'); 
+//			    		}
+                });
+            })
+        });
+        /**
+         * 鼠标移动端到头部购物车上面 就ajax 加载
+         */
+        // 鼠标是否移动到了上方
+        var header_cart_list_over = 0;
+        $("#hd-my-cart > .c-n").hover(function(){
+            if(header_cart_list_over == 1)
+                return false;
+            header_cart_list_over = 1;
+            $.ajax({
+                type : "GET",
+                url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+                success: function(data){
+                    $("#show_minicart").html(data);
+                }
+            });
+        }).mouseout(function(){
+
+            (typeof(t) == "undefined") || clearTimeout(t);
+            t = setTimeout(function () {
+                header_cart_list_over = 0; /// 标识鼠标已经离开
+            }, 1000);
+        });
+    //楼层按钮
+        
+    </script>
+</body>
+</html>

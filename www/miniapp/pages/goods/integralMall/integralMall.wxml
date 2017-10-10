@@ -1,0 +1,30 @@
+<!--integralMall.wxml-->
+<scroll-view bindscrolltolower="loadMoreGoods" scroll-y="true" style="height:{{scrollHeight}}px;">
+<view class="container">
+    <view class="nav">
+        <navigator class="nav-item" bindtap="changeTab" id='rank_default'>默认</navigator>
+        <navigator class="nav-item" bindtap="changeTab" id='rank_num'>兑换量<view class="ico-dg"></view></navigator>
+        <navigator class="nav-item" bindtap="changeTab" id='rank_integral'>积分值<view class="ico-dg"></view></navigator>
+    </view>
+    <view class="choice_box">
+        <view class="choice_list">
+            <block wx:for="{{requestData.goods_list}}">
+                <navigator class="choice_item" url="../details/index?id={{item.id}}">
+                    <view class="img-wrap">
+                        <image src="{{url}}/api/goods/goodsThumImages?goods_id={{item.goods_id}}&width=400&height=400"></image>
+                    </view>
+                    <view class="item-cont">
+                        <view class="title">{{item.goods_name}}</view>
+                        <view class="price">
+                        <view class="discount-price">
+                            ￥{{item.shop_price-item.exchange_integral/requestData.point_rate}}</view>+{{item.exchange_integral}}积分
+                        </view>
+                        <view class="market-price">市场价  ￥  {{item.market_price}}</view>
+                    </view>
+                    <button class="exchange-btn">立即兑换</button>
+                </navigator>
+            </block>
+        </view>
+    </view>
+</view>
+</scroll-view>

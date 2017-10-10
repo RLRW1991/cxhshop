@@ -1,0 +1,50 @@
+<view class="container">
+    <block wx:if="{{requestData.cartList.length > 0}}">
+        <view class="login-in pd-bg-fff">
+            <view class="order-item" wx:for="{{requestData.cartList}}" wx:for-index="idx" data-item="{{idx}}">
+                <view class="goods-ico" bindtap="checkItem" data-check="item.selected" data-item="{{idx}}">
+                    <icon type="success" size="16" color="{{checkAllToggle||item.selected?'red':'gray'}}" />
+                </view>
+                <view class="goods-img">
+                    <image class="wh100" src="{{url}}/api/goods/goodsThumImages?goods_id={{item.goods_id}}&width=200&height=200"></image>
+                </view>
+                <view class="goods-cont">
+                    <view class="goods-name ellipsis-2">{{item.goods_name}}</view>
+                    <view class="goods-attribute ellipsis-2">{{item.spec_key_name}}</view>
+                    <view class="goods-price co-red">￥{{item.member_goods_price}}</view>
+                    <view class="btn-del" bindtap="deleteItem" data-item="{{idx}}">
+                        <image class="wh100" src="{{resourceUrl}}/static/images/dele.png"></image>
+                    </view>
+                    <view class="count">
+                        <view class="sub" bindtap="subNum" data-item="{{idx}}">-</view>
+                        <input type="number" value="{{item.goods_num}}" data-item="{{idx}}" bindblur="valueToNum" />
+                        <view class="add" bindtap="addNum" data-item="{{idx}}">+</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="pay-for">
+            <label class="checkbox" bindtap="checkAll">
+                <icon class="ico-check" type="success" size="20" color="{{checkAllToggle?'red':'gray'}}" />全选
+            </label>
+            <button class="pay-btn">去结算</button>
+            <view class="consumer">
+                <view class="total">总计 : <text class="co-red">{{requestData.total_price.total_fee}}</text></view>
+                <text class="tips">不包含运费</text>
+            </view>
+        </view>
+    </block>
+    <block wx:else>
+        <view class="not-login">
+            <view class="t-c">
+                <image src="{{cartImg}}" class="cart-image"/>
+                <view>{{tipWords}}</view>
+            </view>
+            <view class="hot-sale">
+                <view class="line">
+                    <navigator url="/pages/index/index/index" class="lookat" open-type="switchTab"> 去逛逛 </navigator>
+                </view> 
+            </view>
+        </view>
+    </block>
+</view>

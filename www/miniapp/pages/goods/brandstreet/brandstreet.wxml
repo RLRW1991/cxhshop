@@ -1,0 +1,39 @@
+<!--brandstreet.wxml-->
+<scroll-view bindscrolltolower="loadMoreBrand" scroll-y="{{true}}" style="height:{{scrollHeight}}px;">
+<view class="container">
+    <navigator class="copyright" url="#"><image class="wh100" src="{{url}}/public/upload/ad/2016/07-03/57792b4ee20e3.jpg"/></navigator>
+    <view>
+        <swiper class="swiper_box" indicator-dots="{{true}}" vertical="{{false}}"
+                autoplay="{{true}}" interval="3000" duration="1000">
+            <block wx:for="{{requestData.hot_list}}" wx:for-index="index2" wx:for-item="item2">
+            <block wx:if="{{index2 % 3 == 0}}">
+                 <swiper-item>
+                 <block  wx:for="{{requestData.hot_list}}">
+                    <block wx:if="{{index>=index2 && index <=index2 + 2}}">
+                    <navigator class="slide-item" url="#">
+                        <view class="image-wrap">
+                            <image class="wh100" src="{{url}}/api/goods/goodsThumImages?goods_id={{item.goods_id}}&width=200&height=200"/>
+                        </view>
+                        <view class="current-price">￥{{item.shop_price}}</view>
+                        <view class="market-price">￥{{item.market_price}}</view>
+                    </navigator>
+                    </block>
+                </block>
+                </swiper-item>
+            </block>
+            </block>
+        </swiper>
+    </view>
+    <view class="recommend">
+        <view class="re-title">推荐大牌</view>
+        <view class="tab-list">
+            <block  wx:for="{{requestData.brand_list}}">
+                <navigator class="brand-item" url="#">
+                    <image src="{{url}}{{item.logo}}"/>
+                </navigator>
+            </block>
+        </view>
+    </view>
+</view>
+</scroll-view>
+

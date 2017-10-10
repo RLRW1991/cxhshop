@@ -1,0 +1,3 @@
+<?php
+//000000086400a:5:{i:0;a:6:{s:2:"id";i:1;s:4:"name";s:15:"新能源汽车";s:7:"is_show";i:1;s:6:"is_new";i:1;s:4:"sort";i:50;s:3:"url";s:36:"/index.php/Home/Goods/goodsList/id/1";}i:1;a:6:{s:2:"id";i:2;s:4:"name";s:12:"会员商品";s:7:"is_show";i:1;s:6:"is_new";i:1;s:4:"sort";i:40;s:3:"url";s:36:"/index.php/Home/Goods/goodsList/id/2";}i:2;a:6:{s:2:"id";i:3;s:4:"name";s:9:"车生活";s:7:"is_show";i:1;s:6:"is_new";i:1;s:4:"sort";i:30;s:3:"url";s:36:"/index.php/Home/Goods/goodsList/id/3";}i:3;a:6:{s:2:"id";i:4;s:4:"name";s:9:"充电桩";s:7:"is_show";i:1;s:6:"is_new";i:1;s:4:"sort";i:0;s:3:"url";s:36:"/index.php/Home/Goods/goodsList/id/4";}i:4;a:6:{s:2:"id";i:5;s:4:"name";s:12:"会员展示";s:7:"is_show";i:1;s:6:"is_new";i:1;s:4:"sort";i:0;s:3:"url";s:36:"/index.php/Home/Goods/goodsList/id/5";}}
+?>

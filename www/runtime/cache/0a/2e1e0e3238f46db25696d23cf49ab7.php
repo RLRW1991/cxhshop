@@ -1,0 +1,3 @@
+<?php
+//000000000000a:6:{i:1;a:4:{s:2:"id";i:1;s:4:"name";s:15:"新能源汽车";s:9:"parent_id";i:0;s:5:"level";i:1;}i:2;a:4:{s:2:"id";i:2;s:4:"name";s:12:"会员商品";s:9:"parent_id";i:0;s:5:"level";i:1;}i:3;a:4:{s:2:"id";i:3;s:4:"name";s:9:"车生活";s:9:"parent_id";i:0;s:5:"level";i:1;}i:4;a:4:{s:2:"id";i:4;s:4:"name";s:6:"野马";s:9:"parent_id";i:1;s:5:"level";i:2;}i:5;a:4:{s:2:"id";i:5;s:4:"name";s:6:"江淮";s:9:"parent_id";i:1;s:5:"level";i:2;}i:6;a:4:{s:2:"id";i:6;s:4:"name";s:9:"充电桩";s:9:"parent_id";i:0;s:5:"level";i:1;}}
+?>
